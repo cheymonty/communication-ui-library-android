@@ -208,11 +208,15 @@ public final class CallComposite {
     /**
      * Dismiss composite. If call is in progress, user will leave a call.
      */
-    public void dismiss() {
+    public void dismiss(Boolean forceCallEnd) {
         final DependencyInjectionContainer container = diContainer;
         if (container != null) {
-            container.getCompositeExitManager().exit();
+            container.getCompositeExitManager().exit(forceCallEnd);
         }
+    }
+
+    public void dismiss() {
+        dismiss(false);
     }
 
     /**

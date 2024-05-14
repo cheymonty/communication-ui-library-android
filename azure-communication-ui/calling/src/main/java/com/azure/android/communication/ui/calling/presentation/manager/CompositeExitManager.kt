@@ -24,7 +24,13 @@ internal class CompositeExitManager(
         }
     }
 
-    fun exit() {
+    fun exit(forceCallEnd: Boolean) {
+        // when app is in background, callIsNotInProgress returns true
+        if (forceCallEnd) {
+            store.dispatch(action = CallingAction.CallEndRequested())
+            return
+        }
+
         val callIsNotInProgress =
             store.getCurrentState().callState.callingStatus == CallingStatus.NONE ||
                 store.getCurrentState().callState.callingStatus == CallingStatus.DISCONNECTED
